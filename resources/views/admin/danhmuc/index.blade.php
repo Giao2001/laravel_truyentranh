@@ -4,10 +4,15 @@
 @include('layouts.nav')
 
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+    <div class="row justify-content-around">
+        <div class="col-md-8" style="width: 100%">
             <div class="card">
-                <div class="card-header">{{ __('Danh mục quản lý') }}</div>
+                <div class="card-header d-flex justify-content-between">
+                    <div class="p-2 bd-highlight">{{ __('Danh mục quản lý') }}</div>
+                    <a class="btn btn-primary" href="{{route('danhmuc.create')}}" role="button" style="margin: 0.5%;">Thêm mới</a>
+                </div>
+
+                <!-- <div class="card-header">{{ __('Danh mục') }}</div> -->
 
                 <div class="card-body">
                     @if (session('status'))
@@ -54,6 +59,39 @@
 
                 </div>
             </div>
+        </div>
+
+        <!-- Create table -->
+        <div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Handle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td colspan="2">Larry the Bird</td>
+                        <td>@twitter</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
