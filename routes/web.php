@@ -25,4 +25,5 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::resource('/danhmuc', DanhmucController::class);
 
-
+// Route::get('/danhmuc', [DanhmucController::class, 'index'])->name('danhmuc.index');
+// Route::delete('/danhmuc/{danhmuc}', 'DanhMucController@destroy')->name('danhmuc.destroy');

@@ -1,0 +1,16 @@
+truyentranh_server:
+    build: .
+    dockerfile: ./docker/Dockerfile
+    contrainer_name: truyentranh_framework
+    working_dir: /var/www/html
+    port:
+        - "80:80"
+    volumes:
+        - .:/var/www/html
+        - ./docker/nginx_log:/var/log/nginx
+        - ./docker/php-fpm/php-fpm.log:/var/log/php-fpm.log
+        - ./docker/config/app.conf:/etc/nginx/conf.d/app.conf
+mysql:
+  image: mysql:8.0
+  container_name: truyentranh_mysql
+  

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DanhMuc;
 use Illuminate\Http\Request;
 
+
 class DanhMucController extends Controller
 {
     /**
@@ -14,7 +15,8 @@ class DanhMucController extends Controller
      */
     public function index()
     {
-        return view('admin.danhmuc.index');
+        $data = DanhMuc::all();
+        return view('admin.danhmuc.index')->with(compact('data'));
     }
 
     /**
@@ -35,11 +37,25 @@ class DanhMucController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'tendanhmuc' => 'required|unique:posts|max:255',
-            'motadanhmuc' => 'required|unique:posts|max:255',
+        $validated = $request->validate(
+            [
+                'tendanhmuc' => 'required|unique:danhmuc|max:255',
+                'motadanhmuc' => 'required|max:255',
+                'tinhtrang' => 'required',
+            ],
+            [
+                'tendanhmuc.required' => '"Tên danh mục" không được để trống',
+                'motadanhmuc.required' => '"Mô tả danh mục" không được để trống',
+                'tendanhmuc.unique' => '"Tên danh mục" đã tồn tại',
 
-        ]);
+            ]
+        );
+        $danhmuctruyen = new DanhMuc();
+        $danhmuctruyen->tendanhmuc = $validated['tendanhmuc'];
+        $danhmuctruyen->mota = $validated['motadanhmuc'];
+        $danhmuctruyen->tinhtrang = $validated['tinhtrang'];
+        $danhmuctruyen->save();
+        return redirect()->back()->with('status', 'Thêm danh mục thành công!');
     }
 
     /**
@@ -58,9 +74,10 @@ class DanhMucController extends Controller
      * @param  \App\Models\DanhMuc  $danhMuc
      * @return \Illuminate\Http\Response
      */
-    public function edit(DanhMuc $danhMuc)
+    public function edit(DanhMuc $danhmuc)
     {
-        //
+        Danhmuc::find($danhmuc->id);
+        return view('admin.danhmuc.edit')->with(compact('danhmuc'));
     }
 
     /**
@@ -70,9 +87,25 @@ class DanhMucController extends Controller
      * @param  \App\Models\DanhMuc  $danhMuc
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, DanhMuc $danhMuc)
+    public function update(Request $request, DanhMuc $danhmuc)
     {
-        //
+        $validated = $request->validate(
+            [
+                'tendanhmuc' => 'required|max:255',
+                'motadanhmuc' => 'required|max:255',
+                'tinhtrang' => 'required',
+            ],
+            [
+                'tendanhmuc.required' => '"Tên danh mục" không được để trống',
+                'motadanhmuc.required' => '"Mô tả danh mục" không được để trống',
+            ]
+        );
+        $danhmuctruyen = Danhmuc::find($danhmuc->id);
+        $danhmuctruyen->tendanhmuc = $validated['tendanhmuc'];
+        $danhmuctruyen->mota = $validated['motadanhmuc'];
+        $danhmuctruyen->tinhtrang = $validated['tinhtrang'];
+        $danhmuctruyen->save();
+        return redirect()->back()->with('status', 'Cập nhật danh mục thành công!');
     }
 
     /**
@@ -81,8 +114,9 @@ class DanhMucController extends Controller
      * @param  \App\Models\DanhMuc  $danhMuc
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DanhMuc $danhMuc)
+    public function destroy($id)
     {
-        //
+        Danhmuc::find($id)->delete();
+        return redirect()->back()->with('status', 'Xoá danh mục thành công!');
     }
 }

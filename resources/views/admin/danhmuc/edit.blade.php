@@ -7,7 +7,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
-                    <div class="p-2 bd-highlight" style="font-weight: bold;">{{ __('Tạo danh mục') }}</div>
+                    <div class="p-2 bd-highlight" style="font-weight: bold;">{{ __('Sửa danh mục') }}</div>
 
                 </div>
 
@@ -32,27 +32,30 @@
                     @endif
 
                     <!-- Form -->
-                    <form method="POST" action="{{route('danhmuc.store')}}">
+                    <form method="POST" action="{{route('danhmuc.update', [$danhmuc->id])}}">
                         @csrf
+                        @method('PUT')
                         <div class="mb-3">
                             <label for="name" class="form-label">Tên danh mục</label>
-                            <input type="text" name="tendanhmuc" value="{{old('tendanhmuc')}}" class="form-control" id="name">
-                        </div>
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Slug danh mục</label>
-                            <input type="text" name="slug" value="{{old('slug')}}" class="form-control" id="name">
+                            <input type="text" name="tendanhmuc" value="{{$danhmuc->tendanhmuc}}" class="form-control" id="name">
                         </div>
                         <div class="mb-3">
                             <label for="describe" class="form-label">Mô tả danh mục</label>
-                            <input type="text" name="motadanhmuc" value="{{old('motadanhmuc')}}" class="form-control" id="describe">
+                            <input type="text" name="motadanhmuc" class="form-control" value="{{$danhmuc->mota}}" id="describe">
                         </div>
 
                         <label for="exampleInputEmail1" class="form-label">Tình trạng</label>
-                        <select class="form-select form-select-lg mb-3" name="tinhtrang" aria-label=".form-select-lg example">
-                            <option value="0">Đã công bố</option>
-                            <option value="1">Chưa được công bố</option>
+                        <select class="form-select form-select-lg mb-3" name="tinhtrang" value="{{$danhmuc->tinhtrang}}" aria-label=".form-select-lg example">
+                            @if ($danhmuc->tinhtrang == 0)
+                                <option selected value="0">Đã công bố</option>
+                                <option value="1">Chưa được công bố</option>
+                            @else
+                                <option value="0">Đã công bố</option>
+                                <option selected value="1">Chưa được công bố</option>
+                            @endif
+                            
                         </select>
-                        <button type="submit" class="btn btn-primary">Lưu và thêm mới</button>
+                        <button type="submit" class="btn btn-primary" style="width: 80px">Lưu</button>
 
                     </form>
 
