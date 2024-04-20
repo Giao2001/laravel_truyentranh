@@ -29,6 +29,7 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Tên danh mục</th>
+                                    <th scope="col">Slug danh mục</th>
                                     <th scope="col">Mô tả</th>
                                     <th scope="col">Trạng thái</th>
                                     <th scope="col">Action</th>
@@ -39,6 +40,7 @@
                                 <tr>
                                     <th scope="row">{{$key}}</th>
                                     <td>{{$danhmuc -> tendanhmuc}}</td>
+                                    <td>{{$danhmuc -> slug_danhmuc}}</td>
                                     <td>{{$danhmuc -> mota}}</td>
                                     <td>
                                         @if($danhmuc->tinhtrang == 0)

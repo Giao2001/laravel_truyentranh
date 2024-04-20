@@ -40,6 +40,10 @@
                             <input type="text" name="tendanhmuc" value="{{$danhmuc->tendanhmuc}}" class="form-control" id="name">
                         </div>
                         <div class="mb-3">
+                            <label for="name" class="form-label">Tên danh mục</label>
+                            <input type="text" name="slug_danhmuc" value="{{$danhmuc->slug_danhmuc}}" class="form-control" id="name">
+                        </div>
+                        <div class="mb-3">
                             <label for="describe" class="form-label">Mô tả danh mục</label>
                             <input type="text" name="motadanhmuc" class="form-control" value="{{$danhmuc->mota}}" id="describe">
                         </div>

@@ -40,6 +40,7 @@ class DanhMucController extends Controller
         $validated = $request->validate(
             [
                 'tendanhmuc' => 'required|unique:danhmuc|max:255',
+                'slug_danhmuc' => 'required|unique:danhmuc|max:255',
                 'motadanhmuc' => 'required|max:255',
                 'tinhtrang' => 'required',
             ],
@@ -52,6 +53,7 @@ class DanhMucController extends Controller
         );
         $danhmuctruyen = new DanhMuc();
         $danhmuctruyen->tendanhmuc = $validated['tendanhmuc'];
+        $danhmuctruyen->slug_danhmuc = $validated['slug_danhmuc'];
         $danhmuctruyen->mota = $validated['motadanhmuc'];
         $danhmuctruyen->tinhtrang = $validated['tinhtrang'];
         $danhmuctruyen->save();
@@ -92,6 +94,7 @@ class DanhMucController extends Controller
         $validated = $request->validate(
             [
                 'tendanhmuc' => 'required|max:255',
+                'slug_danhmuc' => 'required|unique:danhmuc|max:255',
                 'motadanhmuc' => 'required|max:255',
                 'tinhtrang' => 'required',
             ],
@@ -102,6 +105,7 @@ class DanhMucController extends Controller
         );
         $danhmuctruyen = Danhmuc::find($danhmuc->id);
         $danhmuctruyen->tendanhmuc = $validated['tendanhmuc'];
+        $danhmuctruyen->slug_danhmuc = $validated['slug_danhmuc'];
         $danhmuctruyen->mota = $validated['motadanhmuc'];
         $danhmuctruyen->tinhtrang = $validated['tinhtrang'];
         $danhmuctruyen->save();

@@ -11,5 +11,5 @@ class DanhMuc extends Model
     protected $table = 'danhmuc';
     protected $primaryKey = 'id';
     public $timestamps = false;
-    protected $fillable = ['tendanhmuc', 'motadanhmuc', 'tinhtrang'];
+    protected $fillable = ['tendanhmuc', 'motadanhmuc', 'tinhtrang', 'slug_danhmuc'];
 }

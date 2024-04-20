@@ -36,11 +36,11 @@
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">Tên danh mục</label>
-                            <input type="text" name="tendanhmuc" value="{{old('tendanhmuc')}}" class="form-control" id="name">
+                            <input type="text" id="slug" name="tendanhmuc" value="{{old('tendanhmuc')}}" onkeyup="ChangeToSlug()" class="form-control">
                         </div>
                         <div class="mb-3">
                             <label for="name" class="form-label">Slug danh mục</label>
-                            <input type="text" name="slug" value="{{old('slug')}}" class="form-control" id="name">
+                            <input type="text" id="convert_slug" name="slug_danhmuc" value="{{old('slug')}}" class="form-control">
                         </div>
                         <div class="mb-3">
                             <label for="describe" class="form-label">Mô tả danh mục</label>
