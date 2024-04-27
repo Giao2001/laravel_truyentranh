@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DanhmucController;
+use App\Http\Controllers\TruyenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,8 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::resource('/danhmuc', DanhmucController::class);
+Route::resource('/truyen', TruyenController::class);
+
 
 // Route::get('/danhmuc', [DanhmucController::class, 'index'])->name('danhmuc.index');
 // Route::delete('/danhmuc/{danhmuc}', 'DanhMucController@destroy')->name('danhmuc.destroy');

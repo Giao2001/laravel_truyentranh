@@ -12,4 +12,9 @@ class DanhMuc extends Model
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $fillable = ['tendanhmuc', 'motadanhmuc', 'tinhtrang', 'slug_danhmuc'];
+
+    public function truyen()
+    {
+        return $this->belongsTo('App\Models\Truyen', 'danhmuc_id', 'id');
+    }
 }
