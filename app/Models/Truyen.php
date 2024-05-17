@@ -16,6 +16,6 @@ class Truyen extends Model
 
     public function danhmuc()
     {
-        return $this->hasMany('App\Models\DanhMuc');
+        return $this->belongsTo('App\Models\DanhMuc', 'danhmuc_id', 'id');
     }
 }

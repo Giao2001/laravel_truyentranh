@@ -15,6 +15,6 @@ class DanhMuc extends Model
 
     public function truyen()
     {
-        return $this->belongsTo('App\Models\Truyen', 'danhmuc_id', 'id');
+        return $this->hasMany('App\Models\Truyen');
     }
 }

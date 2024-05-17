@@ -15,8 +15,10 @@ class TruyenController extends Controller
      */
     public function index()
     {
-        $data = Truyen::with('danhmuc');
-        return view('admin.truyen.index')->with(compact('data'));
+        $list_truyen = Truyen::with('danhmuc')->orderBy('id', 'desc')->get();
+        //dd($list_truyen);
+
+        return view('admin.truyen.index')->with(compact('list_truyen'));
     }
 
     /**
@@ -66,7 +68,7 @@ class TruyenController extends Controller
 
         //upload anh vao folder
         $get_image = $request->hinhanh;
-        $path = 'public/uploads/truyen/';
+        $path = 'uploads/truyen/';
         $get_name_image = $get_image->getClientOriginalName();
         $name_image = current(explode('.', $get_name_image));
         $new_image = $name_image . rand(0, 99) . '.' . $get_image->getClientOriginalExtension();
@@ -96,9 +98,12 @@ class TruyenController extends Controller
      * @param  \App\Models\Truyen  $truyen
      * @return \Illuminate\Http\Response
      */
-    public function edit(Truyen $truyen)
+    public function edit($id)
     {
-        //
+        $truyen = Truyen::find($id);
+        $danhmuc = Danhmuc::orderBy('id', 'desc')->get();
+
+        return view('admin.truyen.edit')->with(compact('truyen', 'danhmuc'));
     }
 
     /**
@@ -110,7 +115,48 @@ class TruyenController extends Controller
      */
     public function update(Request $request, Truyen $truyen)
     {
-        //
+        $validated = $request->validate(
+            [
+                'ten' => 'required|max:255',
+                'slug' => 'required|max:255',
+                'tomtat' => 'required',
+                'tinhtrang' => 'required',
+                'danhmuctruyen' => 'required',
+                //'hinhanh' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048|dimensions:min_width=100,min_height=100,max_width=1000,max_height=1000',
+            ],
+            [
+                'ten.required' => '"Tên truyện" không được để trống',
+                'slug.required' => '"Slug truyện" không được để trống',
+                'tomtat.required' => '"Tóm tắt truyện" không được để trống',
+                //'hinhanh.required' => '"Hình ảnh" phải được tải lên',
+                'danhmuctruyen.required' => '"Danh mục truyện" không được để trống',
+
+            ]
+        );
+        $truyen = Truyen::find($truyen->id);
+        $truyen->ten = $validated['ten'];
+        $truyen->slug = $validated['slug'];
+        $truyen->tomtat = $validated['tomtat'];
+        $truyen->tinhtrang = $validated['tinhtrang'];
+        $truyen->danhmuc_id = $validated['danhmuctruyen'];
+
+
+        //upload anh vao folder
+        $get_image = $request->hinhanh;
+        if ($get_image) {
+            $path = 'uploads/truyen/';
+            $get_name_image = $get_image->getClientOriginalName();
+            $name_image = current(explode('.', $get_name_image));
+            $new_image = $name_image . rand(0, 99) . '.' . $get_image->getClientOriginalExtension();
+            $get_image->move($path, $new_image);
+
+            $truyen->hinhanh = $new_image;
+        }
+
+        $truyen->save();
+
+
+        return redirect()->back()->with('status', 'Thêm truyện thành công!');
     }
 
     /**
@@ -119,8 +165,14 @@ class TruyenController extends Controller
      * @param  \App\Models\Truyen  $truyen
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Truyen $truyen)
+    public function destroy($id)
     {
-        //
+        $truyen = Truyen::find($id);
+        $path = 'uploads/truyen/' . $truyen->hinhanh;
+        if (file_exists($path)) {
+            unlink($path);
+        }
+        Truyen::find($id)->delete();
+        return redirect()->back()->with('status', 'Xoá truyện thành công!');
     }
 }

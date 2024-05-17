@@ -29,6 +29,7 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Tên truyện</th>
+                                    <th scope="col">Hình ảnh</th>
                                     <th scope="col">Slug truyệnc</th>
                                     <th scope="col">Tóm tắt truyện</th>
                                     <th scope="col">Danh mục</th>
@@ -40,9 +41,11 @@
                                 @foreach($list_truyen as $key => $truyen)
                                 <tr>
                                     <th scope="row">{{$key}}</th>
-                                    <td>{{$truyen -> tentruyen}}</td>
-                                    <td>{{$truyen -> slug_truyen}}</td>
-                                    <td>{{$truyen -> mota}}</td>
+                                    <td>{{$truyen -> ten}}</td>
+                                    <td><img src="{{asset('/uploads/truyen/'.$truyen->hinhanh)}}" height="200" width="150" alt=""></td>
+                                    <td>{{$truyen -> slug}}</td>
+                                    <td>{{$truyen -> tomtat}}</td>
+                                    <td>{{$truyen->danhmuc->tendanhmuc}}</td>
                                     <td>
                                         @if($truyen->tinhtrang == 0)
                                         <span class="text text-success">Đã công bố</span>
